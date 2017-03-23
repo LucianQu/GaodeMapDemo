@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/btnText1"
@@ -20,6 +20,7 @@
             android:textColor="#CCCCCC"
             android:clickable="true"
             android:textSize="@dimen/inforwindow_dest_desc_textsize" />
+
         <TextView
             android:id="@+id/btnText2"
             android:layout_width="100dp"

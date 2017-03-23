@@ -14,6 +14,9 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  */
@@ -24,6 +27,10 @@ public class ShowMapActivity extends AppCompatActivity implements AMap.OnMarkerC
     private AMap m_aMap ;
     private MarkerOptions m_markerOptions ;
     private View m_markerInfoWindow = null;
+
+    private List<MarkerOptions> m_markerOptionsList = new ArrayList<>();
+    public static List<WellLocationBean> m_wellLocatBeanList = new ArrayList<>();
+    public WellLocationBean m_wellLocatBean ;
 
     private Marker m_marker = null ;
     private double m_markerX;
@@ -44,26 +51,67 @@ public class ShowMapActivity extends AppCompatActivity implements AMap.OnMarkerC
         setContentView(R.layout.activity_show_map) ;
         Intent intent = getIntent() ;
         Bundle bundle = intent.getExtras();
-        String[] strArr = bundle.getStringArray("wellLocaInfo") ;
+      /*  String[] strArr = bundle.getStringArray("wellLocaInfo") ;
         m_markerX = bundle.getDouble("wellLocaX") ;
-        m_markerY = bundle.getDouble("wellLocaY") ;
+        m_markerY = bundle.getDouble("wellLocaY") ;*/
+
+        m_wellLocatBeanList = bundle.getParcelableArrayList("wellLocatBeanList");
 
         m_mapView = (MapView) findViewById(R.id.map) ;//初始化地图控件
         m_mapView.onCreate(savedInstanceState) ;//必须要写
         m_aMap = m_mapView.getMap() ;
+
+        m_aMap.moveCamera(CameraUpdateFactory.newLatLngZoom
+                (new LatLng(m_wellLocatBeanList.get(0).getM_markerX(),
+                        m_wellLocatBeanList.get(0).getM_markerY()),0));//初始化调用
+
         m_aMap.getUiSettings().setMyLocationButtonEnabled(false);
         m_aMap.setMyLocationEnabled(false);
-        m_markerOptions = CustomMarker("","",R.drawable.well_64_5,m_markerX,m_markerY) ;
-        m_marker =  m_aMap.addMarker(m_markerOptions) ;
-        m_aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(m_markerX,m_markerY),16));
+        RemoveMarkerList();
+        WellLocatBeanList2MarkerOptionsList(m_wellLocatBeanList,m_markerOptionsList);
+        AddMarkerList(m_markerOptionsList) ;
+
 
         m_aMap.setOnMarkerClickListener(markerClickListener);
         m_aMap.setInfoWindowAdapter(infoWindowAdapter);
         m_aMap.setOnInfoWindowClickListener(infoWindowListener);
-        WellInfoWindowSet(strArr[0],strArr[1],strArr[2],strArr[3],strArr[4]) ;
-        m_marker.showInfoWindow();
 
     }
+
+    public void WellLocatBeanList2MarkerOptionsList(List<WellLocationBean> wellBeanList,
+                                                    List<MarkerOptions> markerOptionsList) {
+        for (int i = 0; i < wellBeanList.size(); i++) {
+            m_wellLocatBean = wellBeanList.get(i) ;
+            WellInfoWindowSet(m_wellLocatBean.getM_wellName(),m_wellLocatBean.getM_wellAttr(),
+                    m_wellLocatBean.getM_wellAdmin(),m_wellLocatBean.getM_wellX(),
+                    m_wellLocatBean.getM_wellY());
+
+            markerOptionsList.add(CustomMarker(m_wellLocatBean.getM_wellName(),m_wellLocatBean.getM_wellAttr(),
+                    R.drawable.well_64_5,m_wellLocatBean.getM_markerX(),
+                    m_wellLocatBean.getM_markerY()));
+        }
+    }
+
+
+    public void AddMarkerList(List<MarkerOptions> markerOptionsList) {
+
+        for (int i = 0; i < m_wellLocatBeanList.size(); i++) {
+            MarkerOptions marker = markerOptionsList.get(i) ;
+            m_marker = m_aMap.addMarker(marker) ;
+        }
+
+    }
+
+    public void RemoveMarkerList() {
+        List<Marker> saveMarkerList = m_aMap.getMapScreenMarkers() ;
+        if(saveMarkerList == null || saveMarkerList.size() <= 0)
+            return;
+        for (Marker marker : saveMarkerList) {
+            marker.remove();
+        }
+    }
+
+
     /**
      *自定义Marker窗口
      */
@@ -133,6 +181,7 @@ public class ShowMapActivity extends AppCompatActivity implements AMap.OnMarkerC
         markerOptions.draggable(true) ;//点标记是否可拖拽
         markerOptions.setFlat(true) ;//设置Marker贴地显示,可以双指下拉地图查看效果
         markerOptions.icon(BitmapDescriptorFactory.fromResource(icon)) ;
+
        return markerOptions;
     }
     /**
