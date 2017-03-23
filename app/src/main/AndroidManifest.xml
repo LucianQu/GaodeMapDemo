@@ -2,10 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lucian.gaodemapdemo">
 
-    <!--添加APP Key,由高德地图控制台生成-->
-    <meta-data
-        android:name="com.amap.api.v2.apikey"
-        android:value="0addd8600de6e68c7dc60abbea3e9f81"/>
+
 
     <!--地图包,搜索包需要的基础权限-->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -32,6 +29,16 @@
             android:name=".ShowMapActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +47,10 @@
         </activity>
 
         <service android:name="com.amap.api.location.APSService"/>
-
+        <!--添加APP Key,由高德地图控制台生成-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="6bbaf65d082debd90e8f1025a1d1ba89"/>
 
     </application>
 
