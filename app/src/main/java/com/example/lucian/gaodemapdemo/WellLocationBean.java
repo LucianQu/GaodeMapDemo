@@ -9,44 +9,19 @@ import android.os.Parcelable;
 
 public class WellLocationBean implements Parcelable {
     private static final String TAG = "WellLocationBean" ;
-    private String m_wellName ;//水井名称
-    private String m_wellAttr  ;//水井管理处
-    private String m_wellAdmin  ;//水井管理者
-    private String m_wellX ;//水井X坐标名称
-    private String m_wellY ;//水井Y坐标名称
-    private double m_markerX ;//水井X坐标
-    private double m_markerY ;//水井Y坐标
 
-    public double getM_markerX() {
-        return m_markerX;
+    private String m_wellNo ;//水井编码
+    private String m_wellName  ;//水井名称
+    private String m_wellUser  ;//用户
+    private double m_wellX ; //
+    private double m_wellY ; //
+
+    public String getM_wellNo() {
+        return m_wellNo;
     }
 
-    public void setM_markerX(double m_markerX) {
-        this.m_markerX = m_markerX;
-    }
-
-    public double getM_markerY() {
-        return m_markerY;
-    }
-
-    public void setM_markerY(double m_markerY) {
-        this.m_markerY = m_markerY;
-    }
-
-    public String getM_wellAdmin() {
-        return m_wellAdmin;
-    }
-
-    public void setM_wellAdmin(String m_wellAdmin) {
-        this.m_wellAdmin = m_wellAdmin;
-    }
-
-    public String getM_wellAttr() {
-        return m_wellAttr;
-    }
-
-    public void setM_wellAttr(String m_wellAttr) {
-        this.m_wellAttr = m_wellAttr;
+    public void setM_wellNo(String m_wellNo) {
+        this.m_wellNo = m_wellNo;
     }
 
     public String getM_wellName() {
@@ -57,33 +32,28 @@ public class WellLocationBean implements Parcelable {
         this.m_wellName = m_wellName;
     }
 
-    public String getM_wellX() {
+    public String getM_wellUser() {
+        return m_wellUser;
+    }
+
+    public void setM_wellUser(String m_wellUser) {
+        this.m_wellUser = m_wellUser;
+    }
+
+    public double getM_wellX() {
         return m_wellX;
     }
 
-    public void setM_wellX(String m_wellX) {
+    public void setM_wellX(double m_wellX) {
         this.m_wellX = m_wellX;
     }
 
-    public String getM_wellY() {
+    public double getM_wellY() {
         return m_wellY;
     }
 
-    public void setM_wellY(String m_wellY) {
+    public void setM_wellY(double m_wellY) {
         this.m_wellY = m_wellY;
-    }
-
-    @Override
-    public String toString() {
-        return "WellLocationBean{" +
-                "m_markerX=" + m_markerX +
-                ", m_wellName='" + m_wellName + '\'' +
-                ", m_wellAttr='" + m_wellAttr + '\'' +
-                ", m_wellAdmin='" + m_wellAdmin + '\'' +
-                ", m_wellX='" + m_wellX + '\'' +
-                ", m_wellY='" + m_wellY + '\'' +
-                ", m_markerY=" + m_markerY +
-                '}';
     }
 
     @Override
@@ -94,13 +64,11 @@ public class WellLocationBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(m_wellNo);
         parcel.writeString(m_wellName);
-        parcel.writeString(m_wellAdmin);
-        parcel.writeString(m_wellAttr);
-        parcel.writeString(m_wellX);
-        parcel.writeString(m_wellY);
-        parcel.writeDouble(m_markerX);
-        parcel.writeDouble(m_markerY);
+        parcel.writeString(m_wellUser);
+        parcel.writeDouble(m_wellX);
+        parcel.writeDouble(m_wellY);
     }
 
     public static final Parcelable.Creator<WellLocationBean> CREATOR =
@@ -108,13 +76,11 @@ public class WellLocationBean implements Parcelable {
                 @Override
                 public WellLocationBean createFromParcel(Parcel parcel) {
                     WellLocationBean mWellLocationBean = new WellLocationBean() ;
-                    mWellLocationBean.m_wellName = parcel.readString();
-                    mWellLocationBean.m_wellAdmin = parcel.readString() ;
-                    mWellLocationBean.m_wellAttr = parcel.readString() ;
-                    mWellLocationBean.m_wellX = parcel.readString() ;
-                    mWellLocationBean.m_wellY = parcel.readString() ;
-                    mWellLocationBean.m_markerX = parcel.readDouble() ;
-                    mWellLocationBean.m_markerY = parcel.readDouble() ;
+                    mWellLocationBean.m_wellNo = parcel.readString();
+                    mWellLocationBean.m_wellName = parcel.readString() ;
+                    mWellLocationBean.m_wellUser = parcel.readString() ;
+                    mWellLocationBean.m_wellX = parcel.readDouble() ;
+                    mWellLocationBean.m_wellY = parcel.readDouble() ;
                     return mWellLocationBean;
                 }
 

@@ -16,69 +16,77 @@ import java.util.List;
  */
 
 public class MainActivity extends AppCompatActivity {
-    private TextView m_Btn1View ;
-    private TextView m_Btn2View ;
 
-    public static List<WellLocationBean> m_wellLocatBeanList = new ArrayList<>() ;
-    public WellLocationBean m_wellLocatBean ;
+    private TextView m_Btn1View ;
+    public  List<WellLocationBean> m_wLBeanList = new ArrayList<>() ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainactivity);
+
         m_Btn1View = (TextView) findViewById(R.id.btnText1) ;
-        m_Btn2View = (TextView) findViewById(R.id.btnText2) ;
-
-
-
         m_Btn1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent() ;
                 intent.setClass(MainActivity.this, ShowMapActivity.class) ;
 
+                m_wLBeanList.clear();
+                for (int i = 0; i < 400; i++) {
 
-                m_wellLocatBean = new WellLocationBean() ;
-                /*Parcel parcel = Parcel.obtain() ;
-                WellLocationBean bean = WellLocationBean.CREATOR.createFromParcel(parcel);*/
+                    if(i <= 100) {
+                        WellLocationBean wLBean = new WellLocationBean();
+                        wLBean.setM_wellNo("奎管处" + i);
+                        wLBean.setM_wellName("屈陆胜");
+                        wLBean.setM_wellUser("" + i);
+                        wLBean.setM_wellX(i * 0.01 + 44.42);
+                        wLBean.setM_wellY(84.9);
+                        m_wLBeanList.add(wLBean);
+                    }
+                    if(i <= 200 && i >100) {
+                        WellLocationBean wLBean = new WellLocationBean();
+                        wLBean.setM_wellNo("奎管处" + i);
+                        wLBean.setM_wellName("苏景台");
+                        wLBean.setM_wellUser("" + i);
+                        wLBean.setM_wellX(44.42);
+                        wLBean.setM_wellY((i-100) * 0.01 + 84.9);
+                        m_wLBeanList.add(wLBean);
+                    }
 
-                for (int i = 0; i < 10; i++) {
-                    m_wellLocatBean.setM_wellName("" + i);
-                    m_wellLocatBean.setM_wellAttr("" + i);
-                    m_wellLocatBean.setM_wellAdmin("" + i);
-                    m_wellLocatBean.setM_wellX("" + i * 1000);
-                    m_wellLocatBean.setM_wellY("" + i * 1000);
-                    m_wellLocatBean.setM_markerX(i* 0.000001 + 55.46033333333333);
-                    m_wellLocatBean.setM_markerY(i* 0.000001 + 66.91884444444445);
-                    m_wellLocatBeanList.add(m_wellLocatBean);
+                    if(i <= 300 && i >200) {
+                        WellLocationBean wLBean = new WellLocationBean();
+                        wLBean.setM_wellNo("奎管处" + i);
+                        wLBean.setM_wellName("崔健");
+                        wLBean.setM_wellUser("" + i);
+                        wLBean.setM_wellX(1 +44.42);
+                        wLBean.setM_wellY((i-200) * 0.01 + 84.9);
+                        m_wLBeanList.add(wLBean);
+                    }
+
+                    if(i <= 400 && i > 300) {
+                        WellLocationBean wLBean = new WellLocationBean();
+                        wLBean.setM_wellNo("奎管处" + i);
+                        wLBean.setM_wellName("张威");
+                        wLBean.setM_wellUser("" + i);
+                        wLBean.setM_wellX((i-300) * 0.01 + 44.42);
+                        wLBean.setM_wellY(1+ 84.9);
+                        m_wLBeanList.add(wLBean);
+                    }
                 }
-                //parcel.recycle();
+                WellLocationBean wLBean = new WellLocationBean();
+                wLBean.setM_wellNo("北京奥特美克科技股份有限公司");
+                wLBean.setM_wellName("研发中心_平台组");
+                wLBean.setM_wellUser("屈陆胜");
+                wLBean.setM_wellX(0.5 + 44.42);
+                wLBean.setM_wellY(0.5+ 84.9);
+                m_wLBeanList.add(wLBean);
 
                 intent.putParcelableArrayListExtra("wellLocatBeanList",
-                        (ArrayList<? extends Parcelable>) m_wellLocatBeanList);
+                        (ArrayList<? extends Parcelable>) m_wLBeanList);
                 startActivity(intent);
             }
         });
-        m_Btn2View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent() ;
-                intent.setClass(MainActivity.this, ShowMapActivity.class) ;
-                String[] strArr = new String[7] ;
-                strArr[0] = "奎管处2号井" ;
-                strArr[1] = "奎管处2号井" ;
-                strArr[2] = "奎管处2号井" ;
-                strArr[3] = "奎管处2号井" ;
-                strArr[4] = "奎管处2号井" ;
-                double locationX = 55.46033333333333 ;
-                double locationY = 66.91884444444445 ;
-                intent.putExtra("wellLocaInfo", strArr) ;
-                intent.putExtra("wellLocaX", locationX) ;
-                intent.putExtra("wellLocaY", locationY) ;
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
